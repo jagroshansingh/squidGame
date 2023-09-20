@@ -9,14 +9,22 @@ import {
   getTimerAction,
   setWinnerStatusAction,
 } from "../redux/action";
+import { useNavigate } from "react-router-dom";
 
 export const GreenLightRedLight = () => {
+  const navigate = useNavigate();
   let colorRef = useRef("");
   let timerRef = useRef("");
   const dispatch = useDispatch();
-  const { TimeOver, startGame, Timer, clickCount, isGameOver, level, isWinner } = useSelector(
-    (store) => store
-  );
+  const {
+    TimeOver,
+    startGame,
+    Timer,
+    clickCount,
+    isGameOver,
+    level,
+    isWinner,
+  } = useSelector((store) => store);
 
   const handleClick = (e) => {
     if (e.target.style.backgroundColor == "green")
@@ -27,7 +35,6 @@ export const GreenLightRedLight = () => {
   };
 
   if (!startGame) {
-
     useEffect(() => {
       //----------------   switching colors----------------------
       let box = document.querySelector(".box");
@@ -43,7 +50,7 @@ export const GreenLightRedLight = () => {
       //-------------------game duration-----------------------
       setTimeout(() => {
         dispatch(TimeOverAction());
-      }, 10000);
+      }, 40000);
 
       //------------------1 second timer------------------------
       clearInterval(timerRef.current);
@@ -51,14 +58,15 @@ export const GreenLightRedLight = () => {
         dispatch(getTimerAction());
       }, 1000);
 
-      if(TimeOver) dispatch(setGameOverStatusAction())
-
+      if (TimeOver) dispatch(setGameOverStatusAction());
     }, [TimeOver]);
 
-    useEffect(()=>{
-      if(clickCount>=level) dispatch(setWinnerStatusAction())
-    },[clickCount])
-
+    useEffect(() => {
+      if (clickCount >= level) {
+        dispatch(setWinnerStatusAction());
+        dispatch(setGameOverStatusAction());
+      }
+    }, [clickCount]);
 
     if (TimeOver || isGameOver) {
       clearInterval(timerRef.current);
@@ -69,8 +77,10 @@ export const GreenLightRedLight = () => {
       <div>
         {isGameOver ? (
           <div>
-            <h1>Game Over!</h1>
-            <h2></h2>
+            <h1>{isWinner ? "You Win!" : "Game Over!"}</h1>
+            <button onClick={()=>navigate('/')}>
+              {isWinner?"Play Again":"Try Again"}
+            </button>
           </div>
         ) : (
           <div>
@@ -78,7 +88,9 @@ export const GreenLightRedLight = () => {
             <button className="box" onClick={handleClick}>
               Color
             </button>
-            <h2>Click Count: {clickCount}/{level}</h2>
+            <h2>
+              Click Count: {clickCount}/{level}
+            </h2>
           </div>
         )}
       </div>

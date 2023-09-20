@@ -2,7 +2,7 @@ import { GET_CLICK_COUNT, SET_GAMEOVER_STATUS, GET_STARTGAME_NOD, GET_TIMER, SET
 
 let initialState={
     startGame:false,
-    Timer:10,
+    Timer:40,
     clickCount:0,
     isGameOver:false,
     isWinner:false,
