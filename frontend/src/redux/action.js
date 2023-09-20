@@ -1,10 +1,11 @@
 import {
   GET_CLICK_COUNT,
   GET_TIMER,
-  GET_GAMEOVER_STATUS,
+  SET_GAMEOVER_STATUS,
   GET_STARTGAME_NOD,
-  GET_WINNER_STATUS,
+  SET_WINNER_STATUS,
   TIMEOVER_STATUS,
+  SET_LEVEL,
 } from "./actionTypes";
 
 const getStartGameNodAction = () => {
@@ -17,21 +18,26 @@ const getTimerAction = () => {
 const getClickCountAction = () => {
   return { type: GET_CLICK_COUNT };
 };
-const getGameOverStatusAction = () => {
-  return { type: GET_GAMEOVER_STATUS };
+const setGameOverStatusAction = () => {
+  return { type: SET_GAMEOVER_STATUS };
 };
-const getWinnerStatusAction = () => {
-  return { type: GET_WINNER_STATUS };
+const setWinnerStatusAction = () => {
+  return { type: SET_WINNER_STATUS };
 };
 const TimeOverAction = () => {
   return { type: TIMEOVER_STATUS };
 };
 
+const setLevelAction=(payload)=>{
+  return {type:SET_LEVEL,payload}
+}
+
 export {
   getStartGameNodAction,
   getClickCountAction,
   getTimerAction,
-  getGameOverStatusAction,
-  getWinnerStatusAction,
+  setGameOverStatusAction,
+  setWinnerStatusAction,
   TimeOverAction,
+  setLevelAction
 };

@@ -4,37 +4,42 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   TimeOverAction,
   getClickCountAction,
+  setGameOverStatusAction,
   getStartGameNodAction,
   getTimerAction,
+  setWinnerStatusAction,
 } from "../redux/action";
 
 export const GreenLightRedLight = () => {
-  let ref = useRef("");
+  let colorRef = useRef("");
   let timerRef = useRef("");
   const dispatch = useDispatch();
-  const { TimeOver, startGame, Timer, clickCount } = useSelector(
+  const { TimeOver, startGame, Timer, clickCount, isGameOver, level, isWinner } = useSelector(
     (store) => store
   );
 
   const handleClick = (e) => {
     if (e.target.style.backgroundColor == "green")
       dispatch(getClickCountAction());
+
+    if (e.target.style.backgroundColor == "red")
+      dispatch(setGameOverStatusAction());
   };
 
   if (!startGame) {
+
     useEffect(() => {
+      //----------------   switching colors----------------------
       let box = document.querySelector(".box");
-      clearInterval(ref.current);
-      ref.current = setInterval(() => {
+      clearInterval(colorRef.current);
+      colorRef.current = setInterval(() => {
         box.style.backgroundColor = `${
           box.style.backgroundColor == "red" || box.style.backgroundColor == ""
             ? "green"
             : "red"
         }`;
       }, 1500);
-    }, []);
 
-    useEffect(() => {
       //-------------------game duration-----------------------
       setTimeout(() => {
         dispatch(TimeOverAction());
@@ -45,19 +50,37 @@ export const GreenLightRedLight = () => {
       timerRef.current = setInterval(() => {
         dispatch(getTimerAction());
       }, 1000);
-    }, []);
+
+      if(TimeOver) dispatch(setGameOverStatusAction())
+
+    }, [TimeOver]);
 
     useEffect(()=>{
-        clearInterval(timerRef.current)
-    },[TimeOver])
+      if(clickCount>=level) dispatch(setWinnerStatusAction())
+    },[clickCount])
+
+
+    if (TimeOver || isGameOver) {
+      clearInterval(timerRef.current);
+      clearInterval(colorRef.current);
+    }
 
     return (
       <div>
-        <h2>{Timer}</h2>
-        <button className="box" onClick={handleClick}>
-          Color
-        </button>
-        <h2>{clickCount}</h2>
+        {isGameOver ? (
+          <div>
+            <h1>Game Over!</h1>
+            <h2></h2>
+          </div>
+        ) : (
+          <div>
+            <h2>Time Left: {Timer}</h2>
+            <button className="box" onClick={handleClick}>
+              Color
+            </button>
+            <h2>Click Count: {clickCount}/{level}</h2>
+          </div>
+        )}
       </div>
     );
   } else

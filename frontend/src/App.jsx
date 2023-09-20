@@ -1,11 +1,11 @@
 import './App.css'
-import { GreenLightRedLight } from './components/GreenLightRedLight'
+import { AllRoutes } from './components/AllRoutes'
 
 function App() {
 
   return (
     <>
-      <GreenLightRedLight/>
+      <AllRoutes/>
     </>
   )
 }
