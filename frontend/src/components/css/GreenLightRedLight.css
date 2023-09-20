@@ -6,6 +6,10 @@
 }
 *{
     text-align: center;
-    /* border:1px solid; */
-    /* margin:auto */
+    border:0px solid;
+    margin:auto
+}
+.spreadApart{
+    display: grid;
+    gap:50px
 }

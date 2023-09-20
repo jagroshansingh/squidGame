@@ -1,4 +1,4 @@
-import { GET_CLICK_COUNT, SET_GAMEOVER_STATUS, GET_STARTGAME_NOD, GET_TIMER, SET_WINNER_STATUS, SET_LEVEL, TIMEOVER_STATUS } from "./actionTypes"
+import { GET_CLICK_COUNT, SET_GAMEOVER_STATUS, GET_STARTGAME_NOD, GET_TIMER, SET_WINNER_STATUS, SET_LEVEL, TIMEOVER_STATUS, RESET_GAME } from "./actionTypes"
 
 let initialState={
     startGame:false,
@@ -19,6 +19,7 @@ export const reducer=(state=initialState,{type,payload})=>{
         case TIMEOVER_STATUS: return {...state,TimeOver:true}
         case SET_LEVEL: return {...state,level:payload}
         case SET_WINNER_STATUS: return {...state,isWinner:true}
+        case RESET_GAME: return initialState
         default: return state
     }
 }

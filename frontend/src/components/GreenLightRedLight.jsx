@@ -8,6 +8,7 @@ import {
   getStartGameNodAction,
   getTimerAction,
   setWinnerStatusAction,
+  resetGameAction,
 } from "../redux/action";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +34,11 @@ export const GreenLightRedLight = () => {
     if (e.target.style.backgroundColor == "red")
       dispatch(setGameOverStatusAction());
   };
+
+  const handleReset=()=>{
+    dispatch(resetGameAction())
+    navigate('/')
+  }
 
   if (!startGame) {
     useEffect(() => {
@@ -76,14 +82,14 @@ export const GreenLightRedLight = () => {
     return (
       <div>
         {isGameOver ? (
-          <div>
+          <div className="spreadApart">
             <h1>{isWinner ? "You Win!" : "Game Over!"}</h1>
-            <button onClick={()=>navigate('/')}>
+            <button onClick={handleReset}>
               {isWinner?"Play Again":"Try Again"}
             </button>
           </div>
         ) : (
-          <div>
+          <div className="spreadApart">
             <h2>Time Left: {Timer}</h2>
             <button className="box" onClick={handleClick}>
               Color

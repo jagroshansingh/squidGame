@@ -6,6 +6,7 @@ import {
   SET_WINNER_STATUS,
   TIMEOVER_STATUS,
   SET_LEVEL,
+  RESET_GAME,
 } from "./actionTypes";
 
 const getStartGameNodAction = () => {
@@ -27,9 +28,11 @@ const setWinnerStatusAction = () => {
 const TimeOverAction = () => {
   return { type: TIMEOVER_STATUS };
 };
-
 const setLevelAction=(payload)=>{
   return {type:SET_LEVEL,payload}
+}
+const resetGameAction=()=>{
+  return {type:RESET_GAME}
 }
 
 export {
@@ -39,5 +42,6 @@ export {
   setGameOverStatusAction,
   setWinnerStatusAction,
   TimeOverAction,
-  setLevelAction
+  setLevelAction,
+  resetGameAction
 };

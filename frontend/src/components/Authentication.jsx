@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 export const Authentication = () => {
     const dispatch=useDispatch()
     const navigate=useNavigate()
-    const level=useSelector(store=>store.level)
 
     const handleLevel=(e)=>{
         switch(e.target.innerText){
